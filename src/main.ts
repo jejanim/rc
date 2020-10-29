@@ -1,4 +1,4 @@
-import { Timer, Unit } from "w3ts";
+import { Force, MapPlayer, Timer, Unit } from "w3ts";
 import { Players } from "w3ts/globals";
 import { addScriptHook, W3TS_HOOK } from "w3ts/hooks";
 
@@ -13,12 +13,19 @@ function tsMain() {
   print(" ");
   print("Welcome to TypeScript!");
 
-  const unit = new Unit(Players[0], FourCC("hfoo"), 0, 0, 270);
-  unit.name = "TypeScript";
+  const getAllPlayers = () => {
+    let players: player[] = []
 
-  new Timer().start(1.00, true, () => {
-    unit.color = Players[math.random(0, bj_MAX_PLAYERS)].color
-  });
+    print("before callback")
+
+    ForForce(GetPlayersAll(), () => players.push(GetEnumPlayer()));
+
+    print("after callback")
+
+    return players
+  }
+
+  getAllPlayers().forEach(p => print(`player ${MapPlayer.fromHandle(p).name}`))
 }
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, tsMain);
