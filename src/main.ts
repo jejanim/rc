@@ -20,31 +20,32 @@ function tsMain() {
     unit.color = Players[math.random(0, bj_MAX_PLAYERS)].color
   });
 
+// --------------------8<-----------------------------------
+
+  // this is working as expected
   new Timer().start(2.00, true, () => {
     print("2s timer expired")
   });
 
-  // --------------------8<-----------------------------------
-
-  print("creating test triggers...")
+  print("creating test triggers...") // does print!
 
   const t1 = new Trigger()
   t1.registerTimerEvent(5, true)
   t1.addCondition((() => true))
-  t1.addAction(() => print("trigger1 action invoked"))
+  t1.addAction(() => print("trigger1 action invoked")) // does not print
 
   const t2 = new Trigger()
   t2.registerTimerEvent(5, true)
   t2.registerTimerEvent(60, true)
-  t2.addAction(() => print("trigger2 action invoked"))
+  t2.addAction(() => print("trigger2 action invoked")) // does not print
 
   const t3 = new Trigger()
   t3.registerAnyUnitEvent(EVENT_PLAYER_UNIT_ATTACKED)
-  t3.addAction(() => print("trigger3 action invoked"))
+  t3.addAction(() => print("trigger3 action invoked")) // does not print (use blood mage to attack any unit)
   
   const t4 = new Trigger()
-  t4.registerTimerExpireEvent(new Timer().start(5, true, () => {print("5s timer expired")}).handle)
-  t4.addAction(() => {print("triggered by expired timer")})
+  t4.registerTimerExpireEvent(new Timer().start(5, true, () => {print("5s timer expired")}).handle) // does not print
+  t4.addAction(() => {print("triggered by expired timer")}) // does not print
 
   // --------------------8<-----------------------------------
 }
