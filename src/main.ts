@@ -1,4 +1,4 @@
-import { Timer, Unit } from "w3ts";
+import { Timer, Trigger, Unit } from "w3ts";
 import { Players } from "w3ts/globals";
 import { addScriptHook, W3TS_HOOK } from "w3ts/hooks";
 
@@ -19,6 +19,34 @@ function tsMain() {
   new Timer().start(1.00, true, () => {
     unit.color = Players[math.random(0, bj_MAX_PLAYERS)].color
   });
+
+  new Timer().start(2.00, true, () => {
+    print("2s timer expired")
+  });
+
+  // --------------------8<-----------------------------------
+
+  print("creating test triggers...")
+
+  const t1 = new Trigger()
+  t1.registerTimerEvent(5, true)
+  t1.addCondition((() => true))
+  t1.addAction(() => print("trigger1 action invoked"))
+
+  const t2 = new Trigger()
+  t2.registerTimerEvent(5, true)
+  t2.registerTimerEvent(60, true)
+  t2.addAction(() => print("trigger2 action invoked"))
+
+  const t3 = new Trigger()
+  t3.registerAnyUnitEvent(EVENT_PLAYER_UNIT_ATTACKED)
+  t3.addAction(() => print("trigger3 action invoked"))
+  
+  const t4 = new Trigger()
+  t4.registerTimerExpireEvent(new Timer().start(5, true, () => {print("5s timer expired")}).handle)
+  t4.addAction(() => {print("triggered by expired timer")})
+
+  // --------------------8<-----------------------------------
 }
 
 addScriptHook(W3TS_HOOK.MAIN_AFTER, tsMain);
